@@ -5,9 +5,9 @@ int bootscreen = 0; //the Nuke OS logo
 int code = 0;       //has the user started entering the code yet?
 int lock = 0;       //is the system locked still?
 int confirmState;   //is the confirm button pressed or not
-int dipState[7];    //dipSwitches state
+int dipState[8];    //dipSwitches state
 
-int confirmButton = 0; //confirm button pin assignment
+int confirmButton = 0;                           //confirm button pin assignment
 int dipSwitches[] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
 
 uint8_t nuke[] = { //Nuke OS logo in bitmap
@@ -36,7 +36,7 @@ uint8_t nuke[] = { //Nuke OS logo in bitmap
     0xbf, 0xbf, 0xbf, 0x9f, 0x5c, 0x40, 0x20, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-uint8_t switches[] = {//DipSwitch image in bitmap
+uint8_t switches[] = { //DipSwitch image in bitmap
     0x00, 0x00, 0x00, 0x00, 0x00, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0,
     0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0,
     0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE0,
@@ -64,12 +64,12 @@ uint8_t switches[] = {//DipSwitch image in bitmap
 
 void setup() // put your setup code here, to run once:
 {
-  
+
   pinMode(confirmButton, INPUT_PULLUP); //set  the confirm button as an input
 
   for (int x = 0; x < 8; x++) //set a dip switch as an input and then advance by one and repeate 8 times
   {
-    pinMode(dipSwitches[x - 1], INPUT_PULLUP);
+    pinMode(dipSwitches[x], INPUT_PULLUP);
   }
 
   if (booting == 0) //booting screen
@@ -138,22 +138,70 @@ void loop()
   //  uView.setCursor(0, 0);
   //  uView.drawBitmap(switches);
   //  uView.display();
- // }
+  // }
   while (lock == 0) //check the dip switches and update the screen if they are on or off, only switch 1 is currently here, this seems to be where the issue is but I can't find it.
   {
     for (int x = 0; x < 8; x++)
     {
-      dipState[x - 1] = digitalRead(dipSwitches[x - 1]);
-      if (dipState[1] == HIGH) {
-        uView.clear(PAGE);
-        uView.setCursor(0, 0);
-        uView.print("1 on");
-      } 
-      else if (dipState[1] == LOW) {
-        uView.clear(PAGE);
-        uView.setCursor(0, 0);
-        uView.print("1 off");
-      }
+      dipState[x] = digitalRead(dipSwitches[x]);
+    }
+    uView.clear(PAGE);
+    uView.setCursor(0, 0);
+    if (dipState[1] == HIGH)
+    {
+      uView.print("1 on");
+    }
+    else if (dipState[1] == LOW)
+    {
+      uView.print("1 off");
+    }
+    uView.setCursor(0, 14);
+    if (dipState[2] == HIGH)
+    {
+      uView.print("2 on");
+    }
+    else if (dipState[2] == LOW)
+    {
+      uView.print("2 off");
+    }
+    uView.setCursor(0, 28);
+    if (dipState[3] == HIGH)
+    {
+      uView.print("3 on");
+    }
+    else if (dipState[3] == LOW)
+    {
+      uView.print("3 off");
+    }
+    if (dipState[4] == HIGH)
+    {
+    }
+    else if (dipState[4] == LOW)
+    {
+    }
+    if (dipState[5] == HIGH)
+    {
+    }
+    else if (dipState[5] == LOW)
+    {
+    }
+    if (dipState[6] == HIGH)
+    {
+    }
+    else if (dipState[6] == LOW)
+    {
+    }
+    if (dipState[7] == HIGH)
+    {
+    }
+    else if (dipState[7] == LOW)
+    {
+    }
+    if (dipState[8] == HIGH)
+    {
+    }
+    else if (dipState[8] == LOW)
+    {
     }
   }
 }
