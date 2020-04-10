@@ -8,7 +8,7 @@ int confirmState;   //is the confirm button pressed or not
 int dipState[8];    //dipSwitches state
 
 int confirmButton = 0;                           //confirm button pin assignment
-int dipSwitches[] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
+int dipSwitches[8] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
 
 uint8_t nuke[] = { //Nuke OS logo in bitmap
     0x00, 0xf8, 0xf8, 0x38, 0xe0, 0x80, 0x00, 0xf8, 0xf8, 0x00, 0x00, 0xe0, 0xe0, 0x00, 0x00, 0x00,
@@ -147,6 +147,15 @@ void loop()
     }
     uView.clear(PAGE);
     uView.setCursor(0, 0);
+    if (dipState[0] == HIGH)
+    {
+      uView.print("0 on");
+    }
+    else if (dipState[0] == LOW)
+    {
+      uView.print("0 off");
+    }
+    uView.setCursor(0, 14);
     if (dipState[1] == HIGH)
     {
       uView.print("1 on");
@@ -155,7 +164,7 @@ void loop()
     {
       uView.print("1 off");
     }
-    uView.setCursor(0, 14);
+    uView.setCursor(0, 28);
     if (dipState[2] == HIGH)
     {
       uView.print("2 on");
@@ -164,14 +173,11 @@ void loop()
     {
       uView.print("2 off");
     }
-    uView.setCursor(0, 28);
     if (dipState[3] == HIGH)
     {
-      uView.print("3 on");
     }
     else if (dipState[3] == LOW)
     {
-      uView.print("3 off");
     }
     if (dipState[4] == HIGH)
     {
@@ -197,11 +203,6 @@ void loop()
     else if (dipState[7] == LOW)
     {
     }
-    if (dipState[8] == HIGH)
-    {
-    }
-    else if (dipState[8] == LOW)
-    {
-    }
+    uView.display();
   }
 }
