@@ -7,7 +7,7 @@ int lock = 0;       //is the system locked still?
 int confirmState;   //is the confirm button pressed or not
 int dipState[8];    //dipSwitches state
 
-int confirmButton = 0;                           //confirm button pin assignment
+int confirmButton = 0;                            //confirm button pin assignment
 int dipSwitches[8] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
 
 uint8_t nuke[] = { //Nuke OS logo in bitmap
@@ -130,6 +130,7 @@ void loop()
     if (confirmState == LOW) //if the button is pressed set bootscreen to 1 and end the while loop
     {
       bootscreen = 1;
+      delay(1000);
     }
   }
   // if (lock == 0)        //draw the dipSwitch bitmap, currently disabled for debuging
@@ -145,6 +146,7 @@ void loop()
     {
       dipState[x] = digitalRead(dipSwitches[x]);
     }
+    confirmState = digitalRead(confirmButton);
     uView.clear(PAGE);
     uView.setCursor(0, 0);
     if (dipState[0] == HIGH)
@@ -204,5 +206,29 @@ void loop()
     {
     }
     uView.display();
+    if (confirmState == LOW)
+    {
+      uView.clear(PAGE);
+      uView.setCursor(0, 0);
+      uView.print("Autherizing");
+      uView.display();
+      delay(2000);
+      if (dipState[0] == LOW && dipState[1] == HIGH && dipState[2] == LOW)
+      {
+        uView.clear(PAGE);
+        uView.setCursor(0, 0);
+        uView.print("yay");
+        uView.display();
+        delay(10000);
+      }
+      else
+      {
+        uView.clear(PAGE);
+        uView.setCursor(0, 0);
+        uView.print("error");
+        uView.display();
+        delay(10000);
+      }
+    }
   }
 }
