@@ -12,6 +12,7 @@ int dipSwitchBitDraw = 0;
 int confirmButton = 0;                            //confirm button pin assignment
 int dipSwitches[8] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
 
+
 uint8_t nuke[] = { //Nuke OS logo in bitmap
     0x00, 0xf8, 0xf8, 0x38, 0xe0, 0x80, 0x00, 0xf8, 0xf8, 0x00, 0x00, 0xe0, 0xe0, 0x00, 0x00, 0x00,
     0xe0, 0xe0, 0x00, 0x00, 0xfc, 0xfc, 0x80, 0xc0, 0x60, 0x20, 0x80, 0xc0, 0x60, 0x60, 0x60, 0xc0,
@@ -286,18 +287,27 @@ void loop()
       {
         uView.clear(PAGE);
         uView.setCursor(0, 0);
-        uView.print("yay");
+        uView.print("Access");
+        uView.setCursor(0, 14);
+        uView.print("Granted");
         uView.display();
         delay(10000);
+        lock = 1;
       }
       else
       {
         uView.clear(PAGE);
         uView.setCursor(0, 0);
-        uView.print("error");
+        uView.print("Access");
+        uView.setCursor(0, 14);
+        uView.print("Denied");
         uView.display();
         delay(10000);
       }
     }
   }
-}
+uView.clear(PAGE);
+uView.setCursor(0, 0);
+uView.print("Nuke OS V0.2");
+uView.display();
+}  
