@@ -283,7 +283,7 @@ void loop()
       uView.print("Autherizing");
       uView.display();
       delay(2000);
-      if (dipState[0] == LOW && dipState[1] == HIGH && dipState[2] == LOW)
+      if (dipState[0] == HIGH && dipState[1] == LOW && dipState[2] == HIGH && dipState[3] == LOW && dipState[4] == HIGH && dipState[5] == HIGH && dipState[6] == HIGH && dipState[7] == LOW)
       {
         uView.clear(PAGE);
         uView.setCursor(0, 0);
