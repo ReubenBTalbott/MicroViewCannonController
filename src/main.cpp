@@ -12,7 +12,6 @@ int dipSwitchBitDraw = 0;
 int confirmButton = 0;                            //confirm button pin assignment
 int dipSwitches[8] = {1, 2, 3, 5, 6, A0, A1, A2}; //dip switch assignment
 
-
 uint8_t nuke[] = { //Nuke OS logo in bitmap
     0x00, 0xf8, 0xf8, 0x38, 0xe0, 0x80, 0x00, 0xf8, 0xf8, 0x00, 0x00, 0xe0, 0xe0, 0x00, 0x00, 0x00,
     0xe0, 0xe0, 0x00, 0x00, 0xfc, 0xfc, 0x80, 0xc0, 0x60, 0x20, 0x80, 0xc0, 0x60, 0x60, 0x60, 0xc0,
@@ -69,6 +68,7 @@ void setup() // put your setup code here, to run once:
 {
 
   pinMode(confirmButton, INPUT_PULLUP); //set  the confirm button as an input
+  pinMode(A3, OUTPUT);
 
   for (int x = 0; x < 8; x++) //set a dip switch as an input and then advance by one and repeate 8 times
   {
@@ -306,8 +306,38 @@ void loop()
       }
     }
   }
-uView.clear(PAGE);
-uView.setCursor(0, 0);
-uView.print("Nuke OS V0.2");
-uView.display();
-}  
+  while (lock == 1)
+  {
+    uView.clear(PAGE);
+    uView.setCursor(0, 0);
+    uView.print("press button to launch");
+    uView.display();
+    confirmState = digitalRead(confirmButton);
+    if (confirmState == LOW)
+    {
+      uView.clear(PAGE);
+      uView.setCursor(0, 0);
+      uView.print("3");
+      uView.display();
+      delay(1000);
+      uView.clear(PAGE);
+      uView.setCursor(0, 0);
+      uView.print("2");
+      uView.display();
+      delay(1000);
+      uView.clear(PAGE);
+      uView.setCursor(0, 0);
+      uView.print("1");
+      uView.display();
+      delay(1000);
+      uView.clear(PAGE);
+      uView.setCursor(0, 0);
+      uView.print("Launching");
+      uView.display();
+      delay(1000);
+      digitalWrite(A3, HIGH);
+      delay(1000);
+      digitalWrite(A3, LOW);
+    }
+  }
+}
